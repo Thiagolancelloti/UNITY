@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unity Saúde | Planos por Adesão</title>
+  <meta name="description" content="Planos de saúde Unity Saúde por adesão com condições especiais para profissionais associados.">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #2a5bd7;
+      --primary-dark: #1e429f;
+      --secondary: #10b981;
+      --dark: #1e293b;
+      --light: #f8fafc;
+      --gray: #94a3b8;
+      --red: #ef4444;
+      --bg-color: #f5f7fa;
+      --card-bg: #ffffff;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: var(--dark);
+      background-color: var(--bg-color);
+    }
+    
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    /* Header */
+    header {
+      background: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+    
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .logo img {
+      height: 90px;
+    }
+    
+    .logo-text {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 25px;
+    }
+    
+    nav a {
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 500;
+      transition: all 0.3s;
+      padding: 5px 0;
+      position: relative;
+    }
+    
+    nav a:hover {
+      color: var(--primary);
+    }
+    
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      transition: width 0.3s;
+    }
+    
+    nav a:hover::after {
+      width: 100%;
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--dark);
+      cursor: pointer;
+    }
+    
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      padding: 150px 0 100px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 50%;
+      height: 100%;
+      background: url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center/cover;
+      opacity: 0.2;
+    }
+    
+    .hero-content {
+      max-width: 600px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .hero h1 {
+      font-size: 2.8rem;
+      margin-bottom: 20px;
+      line-height: 1.2;
+      padding-left: 40px;
+    }
+    
+    .hero p {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      opacity: 0.9;
+    }
+    
+    .btn {
+      display: inline-block;
+      padding: 12px 30px;
+      border-radius: 50px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+    
+    .btn-primary {
+      background: white;
+      color: var(--primary);
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    
+    .btn-secondary {
+      background: transparent;
+      color: white;
+      border: 2px solid white;
+      margin-left: 15px;
+    }
+    
+    .btn-secondary:hover {
+      background: white;
+      color: var(--primary);
+    }
+    
+    /* Planos */
+    .section-title {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    
+    .section-title h2 {
+      font-size: 2.2rem;
+      color: var(--dark);
+      margin-bottom: 15px;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .section-title h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+    
+    .section-title p {
+      color: var(--gray);
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    .plans {
+      padding: 80px 0;
+    }
+    
+    .plan-tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 40px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    
+    .tab-btn {
+      padding: 12px 25px;
+      background: none;
+      border: none;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--gray);
+      cursor: pointer;
+      position: relative;
+      transition: all 0.3s;
+    }
+    
+    .tab-btn.active {
+      color: var(--primary);
+    }
+    
+    .tab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--primary);
+    }
+    
+    .plan-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+    }
+    
+    .plan-card {
+      background: var(--card-bg);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .plan-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+    
+    .plan-card.popular {
+      border: 2px solid var(--primary);
+      position: relative;
+    }
+    
+    .popular-tag {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--primary);
+      color: white;
+      padding: 5px 15px;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    
+    .plan-header {
+      padding: 25px;
+      background: #f8fafc;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    
+    .plan-header h3 {
+      font-size: 1.5rem;
+      margin-bottom: 5px;
+      color: var(--dark);
+    }
+    
+    .plan-header p {
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+    
+    .plan-price {
+      padding: 25px;
+      text-align: center;
+      background: var(--card-bg);
+    }
+    
+    .plan-price .price {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 5px;
+    }
+    
+    .plan-price .price span {
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--gray);
+    }
+    
+    .plan-price .period {
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+    
+    .plan-features {
+      padding: 0 25px 25px;
+    }
+    
+    .plan-features ul {
+      list-style: none;
+      margin-bottom: 25px;
+    }
+    
+    .plan-features li {
+      padding: 10px 0;
+      border-bottom: 1px solid #f1f5f9;
+      display: flex;
+      align-items: center;
+    }
+    
+    .plan-features li:last-child {
+      border-bottom: none;
+    }
+    
+    .plan-features li i {
+      color: var(--primary);
+      margin-right: 10px;
+      font-size: 0.9rem;
+    }
+    
+    .plan-btn {
+      display: block;
+      text-align: center;
+      padding: 12px;
+      background: var(--primary);
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+    
+    .plan-btn:hover {
+      background: var(--primary-dark);
+    }
+    
+    /* Benefícios */
+    .benefits {
+      padding: 80px 0;
+      background: white;
+    }
+    
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+    }
+    
+    .benefit-card {
+      background: var(--card-bg);
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+      transition: transform 0.3s;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+    
+    .benefit-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+    
+    .benefit-icon {
+      width: 70px;
+      height: 70px;
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 1.8rem;
+    }
+    
+    .benefit-card h3 {
+      margin-bottom: 15px;
+      color: var(--dark);
+    }
+    
+    .benefit-card p {
+      color: var(--gray);
+      font-size: 0.95rem;
+    }
+    
+    /* Carências */
+    .waiting {
+      padding: 80px 0;
+      background: var(--bg-color);
+    }
+    
+    .waiting-table {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    thead {
+      background: var(--primary);
+      color: white;
+    }
+    
+    th, td {
+      padding: 15px;
+      text-align: left;
+    }
+    
+    th {
+      font-weight: 600;
+    }
+    
+    tbody tr:nth-child(even) {
+      background: #f8fafc;
+    }
+    
+    tbody tr:hover {
+      background: #f1f5f9;
+    }
+    
+    .note {
+      margin-top: 20px;
+      font-size: 0.9rem;
+      color: var(--gray);
+      font-style: italic;
+    }
+    
+    /* Rede Credenciada */
+    .network {
+      padding: 80px 0;
+      background: white;
+    }
+    
+    .network-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+    
+    .network-card {
+      background: var(--card-bg);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      transition: transform 0.3s;
+    }
+    
+    .network-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .network-header {
+      padding: 20px;
+      background: var(--primary);
+      color: white;
+    }
+    
+    .network-header h3 {
+      font-size: 1.3rem;
+      margin-bottom: 5px;
+    }
+    
+    .network-header p {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+    
+    .network-features {
+      padding: 20px;
+    }
+    
+    .network-features ul {
+      list-style: none;
+    }
+    
+    .network-features li {
+      padding: 10px 0;
+      border-bottom: 1px solid #f1f5f9;
+      display: flex;
+      align-items: center;
+    }
+    
+    .network-features li:last-child {
+      border-bottom: none;
+    }
+    
+    .network-features li i {
+      color: var(--primary);
+      margin-right: 10px;
+      font-size: 0.9rem;
+    }
+    
+    .more-hospitals {
+      text-align: center;
+      margin-top: 30px;
+    }
+    
+    .more-hospitals a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+    
+    .more-hospitals a:hover {
+      color: var(--primary-dark);
+      text-decoration: underline;
+    }
+    
+    /* Contato */
+    .contact {
+      padding: 80px 0;
+      background: var(--bg-color);
+    }
+    
+    .contact-form {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: var(--dark);
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #e2e8f0;
+      border-radius: 5px;
+      font-family: inherit;
+      transition: border 0.3s;
+      background: #f8fafc;
+    }
+    
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: white;
+    }
+    
+    textarea.form-control {
+      min-height: 150px;
+      resize: vertical;
+    }
+    
+    .submit-btn {
+      width: 100%;
+      padding: 15px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    
+    .submit-btn:hover {
+      background: var(--primary-dark);
+    }
+    
+    /* WhatsApp */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 60px;
+      height: 60px;
+      background: var(--secondary);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      z-index: 100;
+      transition: all 0.3s;
+      text-decoration: none;
+    }
+    
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+    
+    /* Footer */
+    footer {
+      background: var(--dark);
+      color: white;
+      padding: 60px 0 20px;
+    }
+    
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+    
+    .footer-col h3 {
+      font-size: 1.3rem;
+      margin-bottom: 20px;
+      position: relative;
+      padding-bottom: 10px;
+    }
+    
+    .footer-col h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 2px;
+      background: var(--primary);
+    }
+    
+    .footer-col p {
+      color: #cbd5e1;
+      margin-bottom: 15px;
+      font-size: 0.95rem;
+    }
+    
+    .footer-links {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+    
+    .footer-links a {
+      color: #cbd5e1;
+      text-decoration: none;
+      transition: color 0.3s;
+      font-size: 0.95rem;
+    }
+    
+    .footer-links a:hover {
+      color: white;
+    }
+    
+    .footer-contact-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    
+    .footer-contact-item i {
+      margin-right: 10px;
+      color: var(--primary);
+    }
+    
+    .footer-bottom {
+      text-align: center;
+      padding-top: 20px;
+      border-top: 1px solid #334155;
+      color: #94a3b8;
+      font-size: 0.9rem;
+    }
+    
+    /* Responsivo */
+    @media (max-width: 992px) {
+      .hero::before {
+        width: 40%;
+        opacity: 0.1;
+      }
+      
+      .hero-content {
+        max-width: 100%;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .mobile-menu-btn {
+        display: block;
+      }
+      
+      nav {
+        position: fixed;
+        top: 80px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 80px);
+        background: white;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s;
+      }
+      
+      nav.active {
+        left: 0;
+      }
+      
+      nav ul {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .hero {
+        padding: 120px 0 80px;
+        text-align: center;
+      }
+      
+      .hero::before {
+        display: none;
+      }
+      
+      .hero-btns {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .btn-secondary {
+        margin-left: 0;
+      }
+      
+      .plan-cards {
+        grid-template-columns: 1fr;
+      }
+      
+      .network-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    @media (max-width: 576px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+      
+      .section-title h2 {
+        font-size: 1.8rem;
+      }
+      
+      .plan-tabs {
+        flex-direction: column;
+      }
+      
+      .tab-btn {
+        border-bottom: 1px solid #e2e8f0;
+      }
+      
+      .tab-btn.active::after {
+        display: none;
+      }
+      
+      .contact-form {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container header-container">
+      <div class="logo">
+        <img src="unity.jpeg" alt="Unity Saúde">
+        <span class="logo-text">UNITY SAÚDE</span>
+      </div>
+      
+      <button class="mobile-menu-btn">
+        <i class="fas fa-bars"></i>
+      </button>
+      
+      <nav>
+        <ul>
+          <li><a href="https://planosaude.vercel.app/" tabindex="0">Outros Planos</a></li>
+          <li><a href="#planos">Planos</a></li>
+          <li><a href="#beneficios">Benefícios</a></li>
+          <li><a href="#carencias">Carências</a></li>
+          <li><a href="#rede-credenciada">Rede Credenciada</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1>Planos de Saúde por Adesão</h1>
+        <p>Proteção completa para você e sua família com os melhores hospitais e laboratórios do Distrito Federal e entorno.</p>
+        <div class="hero-btns">
+          <a href="#contato" class="btn btn-primary">Solicitar Cotação</a>
+          <a href="#planos" class="btn btn-secondary">Ver Planos</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Planos -->
+  <section id="planos" class="plans">
+    <div class="container">
+      <div class="section-title">
+        <h2>Nossos Planos</h2>
+        <p>Escolha o plano que melhor atende às suas necessidades e tenha acesso a uma ampla rede credenciada</p>
+      </div>
+      
+      <div class="plan-tabs">
+        <button class="tab-btn active" data-tab="com-coparticipacao">Com Coparticipação</button>
+        
+      </div>
+      
+      <div class="tab-content active" id="com-coparticipacao">
+        <div class="plan-cards">
+          <!-- Plano 1 -->
+          <div class="plan-card">
+            <div class="plan-header">
+              <h3>LIFE VITAL COPART AD</h3>
+              <p>Plano ambulatorial com coparticipação</p>
+            </div>
+            <div class="plan-price">
+              <div class="price">R$ 138,34 <span>/mês*</span></div>
+              <div class="period">*Valor para faixa 0-18 anos</div>
+            </div>
+            <div class="plan-features">
+              <ul>
+                <li><i class="fas fa-check"></i> Ambulatorial</li>
+                <li><i class="fas fa-check"></i> Coparticipação</li>
+                <li><i class="fas fa-check"></i> Abrangência Municipal</li>
+                <li><i class="fas fa-check"></i> ANS: 497.776/24-9</li>
+              </ul>
+              <a href="#contato" class="plan-btn">Saiba mais</a>
+            </div>
+          </div>
+          
+          <!-- Plano 2 (Popular) -->
+          <div class="plan-card popular">
+            <div class="popular-tag">Mais Popular</div>
+            <div class="plan-header">
+              <h3>UNITY VIDA COPART AD</h3>
+              <p>Plano completo com coparticipação</p>
+            </div>
+            <div class="plan-price">
+              <div class="price">R$ 248,94 <span>/mês*</span></div>
+              <div class="period">*Valor para faixa 0-18 anos</div>
+            </div>
+            <div class="plan-features">
+              <ul>
+                <li><i class="fas fa-check"></i> Ambulatorial + Hospitalar</li>
+                <li><i class="fas fa-check"></i> Coparticipação</li>
+                <li><i class="fas fa-check"></i> Enfermaria</li>
+                <li><i class="fas fa-check"></i> ANS: 502.251/25-7</li>
+              </ul>
+              <a href="#contato" class="plan-btn">Saiba mais</a>
+            </div>
+          </div>
+          
+          <!-- Plano 3 -->
+          <div class="plan-card">
+            <div class="plan-header">
+              <h3>UNITY STAR COPART AD</h3>
+              <p>Plano completo premium</p>
+            </div>
+            <div class="plan-price">
+              <div class="price">R$ 371,26 <span>/mês*</span></div>
+              <div class="period">*Valor para faixa 0-18 anos</div>
+            </div>
+            <div class="plan-features">
+              <ul>
+                <li><i class="fas fa-check"></i> Ambulatorial + Hospitalar</li>
+                <li><i class="fas fa-check"></i> Coparticipação</li>
+                <li><i class="fas fa-check"></i> Apartamento</li>
+                <li><i class="fas fa-check"></i> ANS: 497.777/24-7</li>
+              </ul>
+              <a href="#contato" class="plan-btn">Saiba mais</a>
+            </div>
+          </div>
+        </div>
+      </div>
+       <br><br><br>
+       <div class="plan-tabs">
+        <button class="tab-btn active" data-tab="com-coparticipacao">Sem Coparticipação</button>
+        
+      </div>
+      <div class="tab-content" id="sem-coparticipacao">
+        <div class="plan-cards">
+          <!-- Plano 4 -->
+          <div class="plan-card">
+            <div class="plan-header">
+              <h3>LIFE VITAL ADESÃO</h3>
+              <p>Plano ambulatorial sem coparticipação</p>
+            </div>
+            <div class="plan-price">
+              <div class="price">R$ 167,57 <span>/mês*</span></div>
+              <div class="period">*Valor para faixa 0-18 anos</div>
+            </div>
+            <div class="plan-features">
+              <ul>
+                <li><i class="fas fa-check"></i> Ambulatorial</li>
+                <li><i class="fas fa-check"></i> Sem coparticipação</li>
+                <li><i class="fas fa-check"></i> Municipal</li>
+                <li><i class="fas fa-check"></i> ANS: 496.994/23-4</li>
+              </ul>
+              <a href="#contato" class="plan-btn">Saiba mais</a>
+            </div>
+          </div>
+          
+          <!-- Plano 5 -->
+          <div class="plan-card">
+            <div class="plan-header">
+              <h3>UNITY VIDA ADESÃO II</h3>
+              <p>Plano completo sem coparticipação</p>
+            </div>
+            <div class="plan-price">
+              <div class="price">R$ 329,77 <span>/mês*</span></div>
+              <div class="period">*Valor para faixa 0-18 anos</div>
+            </div>
+            <div class="plan-features">
+              <ul>
+                <li><i class="fas fa-check"></i> Ambulatorial + Hospitalar</li>
+                <li><i class="fas fa-check"></i> Sem coparticipação</li>
+                <li><i class="fas fa-check"></i> Enfermaria</li>
+                <li><i class="fas fa-check"></i> ANS: 503.487/25-6</li>
+              </ul>
+              <a href="#contato" class="plan-btn">Saiba mais</a>
+            </div>
+          </div>
+          
+          <!-- Plano 6 -->
+          <div class="plan-card">
+            <div class="plan-header">
+              <h3>UNITY STAR ADESÃO</h3>
+              <p>Plano completo premium</p>
+            </div>
+            <div class="plan-price">
+              <div class="price">R$ 433,41 <span>/mês*</span></div>
+              <div class="period">*Valor para faixa 0-18 anos</div>
+            </div>
+            <div class="plan-features">
+              <ul>
+                <li><i class="fas fa-check"></i> Ambulatorial + Hospitalar</li>
+                <li><i class="fas fa-check"></i> Sem coparticipação</li>
+                <li><i class="fas fa-check"></i> Apartamento</li>
+                <li><i class="fas fa-check"></i> ANS: 497.778/24-5</li>
+              </ul>
+              <a href="#contato" class="plan-btn">Saiba mais</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefícios -->
+  <section id="beneficios" class="benefits">
+    <div class="container">
+      <div class="section-title">
+        <h2>Benefícios Exclusivos</h2>
+        <p>Conheça as vantagens de ser cliente Unity Saúde</p>
+      </div>
+      
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <i class="fas fa-hospital"></i>
+          </div>
+          <h3>Rede Credenciada</h3>
+          <p>Ampla rede de hospitais e laboratórios no DF e entorno, incluindo Santa Lúcia, São Mateus e outros.</p>
+        </div>
+        
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <i class="fas fa-laptop-medical"></i>
+          </div>
+          <h3>Telemedicina</h3>
+          <p>Atendimento médico online 24 horas por dia, sem sair de casa.</p>
+        </div>
+        
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <i class="fas fa-procedures"></i>
+          </div>
+          <h3>Internações</h3>
+          <p>Cobertura para internações em enfermaria ou apartamento, conforme seu plano.</p>
+        </div>
+        
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <i class="fas fa-baby"></i>
+          </div>
+          <h3>Obstetrícia</h3>
+          <p>Cobertura para parto a termo após carência de 300 dias.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Carências -->
+  <section id="carencias" class="waiting">
+    <div class="container">
+      <div class="section-title">
+        <h2>Carências dos Planos</h2>
+        <p>Prazos para utilização dos serviços após contratação</p>
+      </div>
+      
+      <div class="waiting-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Procedimento</th>
+              <th>Carência Padrão</th>
+              <th>Carência Reduzida*</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Urgência/Emergência</td>
+              <td>24 horas</td>
+              <td>Imediato</td>
+            </tr>
+            <tr>
+              <td>Consultas Eletivas</td>
+              <td>30 dias</td>
+              <td>Imediato</td>
+            </tr>
+            <tr>
+              <td>Exames Simples</td>
+              <td>30 dias</td>
+              <td>Imediato</td>
+            </tr>
+            <tr>
+              <td>Exames Complementares</td>
+              <td>120 dias</td>
+              <td>Imediato</td>
+            </tr>
+            <tr>
+              <td>Exames Especiais</td>
+              <td>180 dias</td>
+              <td>90 dias</td>
+            </tr>
+            <tr>
+              <td>Internações</td>
+              <td>180 dias</td>
+              <td>180 dias</td>
+            </tr>
+            <tr>
+              <td>Parto a Termo</td>
+              <td>300 dias</td>
+              <td>300 dias</td>
+            </tr>
+            <tr>
+              <td>Doenças Pré-existentes</td>
+              <td>24 meses</td>
+              <td>24 meses</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <p class="note">* Carência reduzida para quem teve plano de saúde nos últimos 6 meses</p>
+    </div>
+  </section>
+
+  <!-- Rede Credenciada -->
+  <section id="rede-credenciada" class="network">
+    <div class="container">
+      <div class="section-title">
+        <h2>Rede Credenciada</h2>
+        <p>Conheça alguns dos principais hospitais e laboratórios da nossa rede</p>
+      </div>
+      
+      <div class="network-grid">
+        <div class="network-card">
+          <div class="network-header">
+            <h3>Hospital Santa Lúcia</h3>
+            <p>Taguatinga, Gama e Asa Norte</p>
+          </div>
+          <div class="network-features">
+            <ul>
+              <li><i class="fas fa-check"></i> Pronto Socorro 24h</li>
+              <li><i class="fas fa-check"></i> Internação</li>
+              <li><i class="fas fa-check"></i> Maternidade</li>
+              <li><i class="fas fa-check"></i> Cardiologia</li>
+              <li><i class="fas fa-check"></i> Pediatria</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="network-card">
+          <div class="network-header">
+            <h3>Hospital São Mateus</h3>
+            <p>Cruzeiro</p>
+          </div>
+          <div class="network-features">
+            <ul>
+              <li><i class="fas fa-check"></i> Pronto Socorro</li>
+              <li><i class="fas fa-check"></i> Internação</li>
+              <li><i class="fas fa-check"></i> Ortopedia</li>
+              <li><i class="fas fa-check"></i> Pediatria</li>
+              <li><i class="fas fa-check"></i> Clínico Geral</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="network-card">
+          <div class="network-header">
+            <h3>Laboratório Sabin</h3>
+            <p>Diversas localidades</p>
+          </div>
+          <div class="network-features">
+            <ul>
+              <li><i class="fas fa-check"></i> Exames laboratoriais</li>
+              <li><i class="fas fa-check"></i> Coleta domiciliar</li>
+              <li><i class="fas fa-check"></i> Resultados online</li>
+              <li><i class="fas fa-check"></i> Atendimento agendado</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="network-card">
+          <div class="network-header">
+            <h3>Hospital das Clínicas</h3>
+            <p>Ceilândia</p>
+          </div>
+          <div class="network-features">
+            <ul>
+              <li><i class="fas fa-check"></i> Pronto Socorro</li>
+              <li><i class="fas fa-check"></i> Internação</li>
+              <li><i class="fas fa-check"></i> Ortopedia</li>
+              <li><i class="fas fa-check"></i> Pediatria</li>
+              <li><i class="fas fa-check"></i> Cirurgia Geral</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="network-card">
+          <div class="network-header">
+            <h3>Hospital PAI</h3>
+            <p>Asa Sul</p>
+          </div>
+          <div class="network-features">
+            <ul>
+              <li><i class="fas fa-check"></i> Pronto Socorro</li>
+              <li><i class="fas fa-check"></i> Pediatria</li>
+              <li><i class="fas fa-check"></i> Clínico Geral</li>
+              <li><i class="fas fa-check"></i> Atendimento ambulatorial</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="network-card">
+          <div class="network-header">
+            <h3>Hospital Santa Luzia</h3>
+            <p>Luziânia-GO</p>
+          </div>
+          <div class="network-features">
+            <ul>
+              <li><i class="fas fa-check"></i> Pronto Socorro</li>
+              <li><i class="fas fa-check"></i> Internação</li>
+              <li><i class="fas fa-check"></i> Maternidade</li>
+              <li><i class="fas fa-check"></i> Pediatria</li>
+              <li><i class="fas fa-check"></i> Clínico Geral</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="more-hospitals">
+        <a href="#contato">Consulte nossa rede completa de hospitais e laboratórios</a>
+      </div>
+    </div>
+  </section>
+
+<!-- Contato -->
+<section id="contato" class="contact">
+  <div class="container">
+    <div class="section-title">
+      <h2>Fale Conosco</h2>
+      <p>Preencha o formulário abaixo e nossa equipe entrará em contato</p>
+    </div>
+    
+    <div class="contact-form">
+      <form id="formContato" action="https://formsubmit.co/plansaudelider@gmail.com" method="POST">
+        <!-- Configurações do FormSubmit -->
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_template" value="table">
+        <input type="text" name="_honey" style="display:none">
+        
+        <div class="form-group">
+          <label for="nome">Nome Completo</label>
+          <input type="text" id="nome" name="nome" class="form-control" placeholder="Seu nome completo" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" name="email" class="form-control" placeholder="seu@email.com" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="telefone">Telefone</label>
+          <input type="tel" id="telefone" name="telefone" class="form-control" 
+                 placeholder="(99) 99999-9999" 
+                 pattern="^\(?\d{2}\)?[\s-]?\d{4,5}-?\d{4}$"
+                 required>
+        </div>
+        
+        <div class="form-group">
+          <label for="plano">Plano de Interesse</label>
+          <select id="plano" name="plano" class="form-control" required>
+            <option value="" disabled selected>Selecione um plano</option>
+            <option value="life-vital-copart">LIFE VITAL COPART AD</option>
+            <option value="unity-vida-copart">UNITY VIDA COPART AD</option>
+            <option value="unity-star-copart">UNITY STAR COPART AD</option>
+            <option value="life-vital">LIFE VITAL ADESÃO</option>
+            <option value="unity-vida">UNITY VIDA ADESÃO II</option>
+            <option value="unity-star">UNITY STAR ADESÃO</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="mensagem">Mensagem</label>
+          <textarea id="mensagem" name="mensagem" class="form-control" placeholder="Escreva sua mensagem..."></textarea>
+        </div>
+        
+        <button type="submit" class="submit-btn">Enviar Mensagem</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+  <!-- WhatsApp -->
+  <a href="https://wa.me/5561998852416?text=Olá,%20gostaria%20de%20saber%20mais%20sobre%20os%20planos%20Unity" class="whatsapp-float">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-col">
+          <h3>Unity Saúde</h3>
+          <p>Planos de saúde por adesão para profissionais associados com a melhor rede credenciada do DF.</p>
+          <p>ANS: 41.760-2 / 42.333-5</p>
+        </div>
+        
+        <div class="footer-col">
+          <h3>Links Rápidos</h3>
+          <ul class="footer-links">
+            <li><a href="#planos">Nossos Planos</a></li>
+            <li><a href="#beneficios">Benefícios</a></li>
+            <li><a href="#carencias">Carências</a></li>
+            <li><a href="#rede-credenciada">Rede Credenciada</a></li>
+            <li><a href="#contato">Fale Conosco</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-col">
+          <h3>Contato</h3>
+          <div class="footer-contact-item">
+            <i class="fas fa-phone"></i>
+            <span>(61) 99885-2416</span>
+          </div>
+          <div class="footer-contact-item">
+            <i class="fas fa-envelope"></i>
+            <span>plansaudelider@gmail.com</span>
+          </div>
+          <div class="footer-contact-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>Brasília - DF</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2025 Thiago Lancelloti. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile Menu
+    const mobileBtn = document.querySelector('.mobile-menu-btn');
+    const nav = document.querySelector('nav');
+    
+    mobileBtn.addEventListener('click', () => {
+      nav.classList.toggle('active');
+      mobileBtn.innerHTML = nav.classList.contains('active') ? 
+        '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+    });
+    
+    // Plan Tabs
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Remove active class from all buttons and contents
+        tabBtns.forEach(btn => btn.classList.remove('active'));
+        tabContents.forEach(content => content.classList.remove('active'));
+        
+        // Add active class to clicked button and corresponding content
+        btn.classList.add('active');
+        const tabId = btn.getAttribute('data-tab');
+        document.getElementById(tabId).classList.add('active');
+      });
+    });
+    
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        // Close mobile menu if open
+        if (nav.classList.contains('active')) {
+          nav.classList.remove('active');
+          mobileBtn.innerHTML = '<i class="fas fa-bars"></i>';
+        }
+        
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+    
+   // Form submission feedback
+const form = document.getElementById('formContato');
+if (form) {
+  form.addEventListener('submit', function() {
+    // Feedback visual para o usuário
+    const submitBtn = form.querySelector('.submit-btn');
+    submitBtn.textContent = 'Enviando...';
+    submitBtn.disabled = true;
+  });
+}
+    
+    // WhatsApp button animation
+    const whatsappBtn = document.querySelector('.whatsapp-float');
+    if (whatsappBtn) {
+      setTimeout(() => {
+        whatsappBtn.style.transform = 'scale(1.1)';
+        setTimeout(() => {
+          whatsappBtn.style.transform = 'scale(1)';
+        }, 300);
+      }, 2000);
+    }
+    
+    // Sticky header on scroll
+    window.addEventListener('scroll', function() {
+      const header = document.querySelector('header');
+      if (window.scrollY > 100) {
+        header.style.boxShadow = '0 4px 15px rgba(0,0,0,0.1)';
+      } else {
+        header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+      }
+    });
+  </script>
+</body>
+</html>
